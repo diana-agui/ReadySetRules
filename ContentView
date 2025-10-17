@@ -9,306 +9,513 @@ struct ContentView: View {
     @State private var showCards = false
     @State private var showRed = false
     @State private var showYellow = false
+    @State private var navigateToSlideshow = false
     
     var body: some View {
-        ZStack {
-            Image("WhatsApp Image 2025-10-08 at 14.29.21")
-                .resizable()
-                .scaledToFill()
-                .frame(width: 420, height: 400)
-            
-            VStack {
-                Spacer()
-                HStack(spacing: 20) {
-                    Button(action: {
-                        showPopup = true
-                    }) {
-                        Image(systemName: "info.circle")
-                            .font(.system(size: 30))
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.orange)
-                            .clipShape(Circle())
+        NavigationStack{
+            ZStack {
+                NavigationLink(destination: SlideshowMenu(), isActive: $navigateToSlideshow) {
+                    EmptyView()
+                }
+                Image("WhatsApp Image 2025-10-08 at 14.29.21")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 420, height: 400)
+                
+                VStack {
+                    Spacer()
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            showPopup = true
+                        }) {
+                            Image(systemName: "info.circle")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.orange)
+                                .clipShape(Circle())
+                        }
+                        .offset(x: 180, y: -30)
+                        
+                        Button(action: {
+                            showClock = true
+                        }) {
+                            Image(systemName: "clock")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.blue)
+                                .clipShape(Circle())
+                        }
+                        .offset(x: 236, y: -90)
+                        
+                        Button(action: {
+                            showFlag = true
+                        }) {
+                            Image(systemName: "circle")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.red)
+                                .clipShape(Circle())
+                        }
+                        .offset(x: 90, y: -510)
+                        
+                        Button(action: {
+                            showPlayer = true
+                        }) {
+                            Image(systemName: "person")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.brown)
+                                .clipShape(Circle())
+                        }
+                        .offset(x: -125, y: -370)
+                        
+                        Button(action: {
+                            showCards = true
+                        }) {
+                            Image(systemName: "info.circle")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.black)
+                                .clipShape(Circle())
+                        }
+                        .offset(x: -320, y: -110)
                     }
-                    .offset(x: 180, y: -30)
-                    
-                    Button(action: {
-                        showClock = true
-                    }) {
-                        Image(systemName: "clock")
-                            .font(.system(size: 30))
-                            .foregroundColor(.white)
+                    .padding(.bottom, 30)
+                }
+                
+                if showPopup {
+                    VStack(spacing: 10) {
+                        Text("Welcome to Ready, Set, Rules! We'll make soccer rules easy peasy to learn.")
+                            .font(.headline)
+                            .foregroundColor(.black)
                             .padding()
-                            .background(Color.blue)
-                            .clipShape(Circle())
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "Welcome to Ready, Set, Rules! Soccer has never been easier.")
+                                }
+                            }
+                        HStack {
+                            Button("Close") {
+                                withAnimation {
+                                    showPopup = false
+                                }
+                            }
+                            
+                            Button("Go to Rules") {
+                                withAnimation {
+                                    showPopup = false
+                                    navigateToSlideshow = true
+                                }
+                            }
+                        }
+                        .padding(.top, 5)
                     }
-                    .offset(x: 236, y: -90)
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.orange.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
+                }
+                
+                if showClock {
+                    VStack(spacing: 10) {
+                        Text("A match lasts 90 minutes total. Two parts of play time, each 45 minutes long. Inbetween the two halves, there is a 15 minute break. Sometimes, injuries can cause extra time added, usually 1-10 minutes.")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "You clicked clock. A match lasts 90 minutes total. Two parts of play, each 45 minutes long. Inbetween the two halves, there is a 15 minute break. Sometimes, injuries can add extra time, usually 1-10 minutes.")
+                                }
+                            }
+                        
+                        Button("Close") {
+                            showClock = false
+                        }
+                        .padding(.top, 5)
+                    }
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.orange.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
+                }
+                
+                if showFlag{
+                    VStack(spacing:10)
+                    {
+                        Text("FIFA's World Cup happens 1 time every 4 years. When it does, it can happen in 1-3 countries. This year, 2026, it'll take place in USA, Canada, & Mexico.")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "You clicked Mexico's flag. FIFA's World Cup happens 1 time every 4 years. When it does, it can happen in 1-3 countries. This year, 2026, it'll take place in USA, Canada, & Mexico.")
+                                }
+                            }
+                        
+                        Button("Close") {
+                            showFlag = false
+                        }
+                        .padding(.top, 5)
+                    }
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.orange.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
+                }
+                
+                if showPlayer{
+                    VStack(spacing:10)
+                    {
+                        Text("Each team in a World Cup match can have up to 26 players, only 11 can be on the field at a time. A maximum of 5 substitutions are allowed per match. If the match ends up going over the time limit, an extra substitution is allowed.")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "You clicked the soccer player. Each team in a World Cup match can have up to 26 players, only 11 can be on the field at a time. A maximum of 5 substitutions are allowed per match. If the match ends up going over the time limit, an extra substitution is allowed.")
+                                }
+                            }
+                        
+                        Button("Close") {
+                            showPlayer = false
+                        }
+                        .padding(.top, 5)
+                    }
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.orange.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
                     
-                    Button(action: {
-                        showFlag = true
-                    }) {
-                        Image(systemName: "circle")
-                            .font(.system(size: 30))
-                            .foregroundColor(.white)
+                }
+                
+                
+                if showCards{
+                    VStack(spacing:10)
+                    {
+                        Text("Pick a card to learn about disciplinary actions")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "You clicked the cards.")
+                                }
+                            }
+                        
+                        HStack(spacing: 20) {
+                            Button("Yellow Card") {
+                                showYellow = true
+                            }
+                            .padding()
+                            .background(Color.yellow)
+                            .foregroundColor(.black)
+                            .cornerRadius(8)
+                            
+                            Button("Red Card") {
+                                showRed = true
+                            }
                             .padding()
                             .background(Color.red)
-                            .clipShape(Circle())
-                    }
-                    .offset(x: 90, y: -510)
-                    
-                    Button(action: {
-                        showPlayer = true
-                    }) {
-                        Image(systemName: "person")
-                            .font(.system(size: 30))
                             .foregroundColor(.white)
-                            .padding()
-                            .background(Color.brown)
-                            .clipShape(Circle())
-                    }
-                    .offset(x: -125, y: -370)
-                    
-                    Button(action: {
-                        showCards = true
-                    }) {
-                        Image(systemName: "info.circle")
-                            .font(.system(size: 30))
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.black)
-                            .clipShape(Circle())
-                    }
-                    .offset(x: -320, y: -110)
-                }
-                .padding(.bottom, 30)
-            }
-            
-            if showPopup {
-                VStack(spacing: 10) {
-                    Text("Welcome to Ready, Set, Rules! We'll make soccer rules easy peasy to learn.")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "Welcome to Ready, Set, Rules! Soccer has never been easier.")
-                            }
+                            .cornerRadius(8)
                         }
-                    
-                    Button("Close") {
-                        showPopup = false
-                    }
-                    .padding(.top, 5)
-                }
-                .frame(width: 300)
-                .padding()
-                .background(Color.orange.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
-            }
-            
-            if showClock {
-                VStack(spacing: 10) {
-                    Text("A match lasts 90 minutes total. Two parts of play time, each 45 minutes long. Inbetween the two halves, there is a 15 minute break. Sometimes, injuries can cause extra time added, usually 1-10 minutes.")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "You clicked clock. A match lasts 90 minutes total. Two parts of play, each 45 minutes long. Inbetween the two halves, there is a 15 minute break. Sometimes, injuries can add extra time, usually 1-10 minutes.")
-                            }
+                        
+                        Button("Close") {
+                            showCards = false
                         }
-                    
-                    Button("Close") {
-                        showClock = false
+                        .padding(.top, 5)
                     }
-                    .padding(.top, 5)
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.orange.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
                 }
-                .frame(width: 300)
-                .padding()
-                .background(Color.orange.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
-            }
-            
-            if showFlag{
-                VStack(spacing:10)
+                
+                
+                if showYellow
                 {
-                    Text("FIFA's World Cup happens 1 time every 4 years. When it does, it can happen in 1-3 countries. This year, 2026, it'll take place in USA, Canada, & Mexico.")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "You clicked Mexico's flag. FIFA's World Cup happens 1 time every 4 years. When it does, it can happen in 1-3 countries. This year, 2026, it'll take place in USA, Canada, & Mexico.")
+                    VStack(spacing:10)
+                    {
+                        Text("A yellow card is a warning. Behavior like fouls, arguing, wasting time, and reckless tackles can get a player a yellow card. Getting two yellow cards in the same match automatically gives you a red card.")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "You clicked the yellow card. A yellow card is a warning. Behavior like fouls, arguing, wasting time, and reckless tackles can get a player a yellow card. Getting two yellow cards in the same match automatically gives you a red card.")
+                                }
                             }
+                        
+                        Button("Close") {
+                            showYellow = false
                         }
-                    
-                    Button("Close") {
-                        showFlag = false
+                        .padding(.top, 5)
                     }
-                    .padding(.top, 5)
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.yellow.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
                 }
-                .frame(width: 300)
-                .padding()
-                .background(Color.orange.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
-                }
-            
-            if showPlayer{
-                VStack(spacing:10)
+                
+                if showRed
                 {
-                    Text("Each team in a World Cup match can have up to 26 players, only 11 can be on the field at a time. A maximum of 5 substitutions are allowed per match. If the match ends up going over the time limit, an extra substitution is allowed.")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "You clicked the soccer player. Each team in a World Cup match can have up to 26 players, only 11 can be on the field at a time. A maximum of 5 substitutions are allowed per match. If the match ends up going over the time limit, an extra substitution is allowed.")
+                    VStack(spacing:10)
+                    {
+                        Text("A red card gets you sent off the field. The team can't replace you. You can get a red card by violence, serious foul play, offensive language, and recieving a 2nd yellow card in the same match.")
+                            .font(.headline)
+                            .foregroundColor(.black)
+                            .padding()
+                            .background(Color.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .onAppear {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    UIAccessibility.post(notification: .announcement, argument: "You clicked the red card. A red card gets you sent off the field. The team can't replace you. You can get a red card by violence, serious foul play, offensive language, and recieving a 2nd yellow card in the same match.")
+                                }
                             }
+                        
+                        Button("Close") {
+                            showRed = false
                         }
-                    
-                    Button("Close") {
-                        showPlayer = false
+                        .padding(.top, 5)
                     }
-                    .padding(.top, 5)
+                    .frame(width: 300)
+                    .padding()
+                    .background(Color.red.opacity(0.4))
+                    .cornerRadius(20)
+                    .transition(.scale)
                 }
-                .frame(width: 300)
-                .padding()
-                .background(Color.orange.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
                 
             }
-            
-            
-            if showCards{
-                VStack(spacing:10)
-                {
-                    Text("Pick a card to learn about disciplinary actions")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "You clicked the cards.")
-                            }
-                        }
-                    
-                    HStack(spacing: 20) {
-                        Button("Yellow Card") {
-                            showYellow = true
-                        }
-                        .padding()
-                        .background(Color.yellow)
-                        .foregroundColor(.black)
-                        .cornerRadius(8)
-                        
-                        Button("Red Card") {
-                            showRed = true
-                        }
-                        .padding()
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                    }
-                    
-                    Button("Close") {
-                        showCards = false
-                    }
-                    .padding(.top, 5)
-                }
-                .frame(width: 300)
-                .padding()
-                .background(Color.orange.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
-            }
-            
-            
-            if showYellow
-            {
-                VStack(spacing:10)
-                {
-                    Text("A yellow card is a warning. Behavior like fouls, arguing, wasting time, and reckless tackles can get a player a yellow card. Getting two yellow cards in the same match automatically gives you a red card.")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "You clicked the yellow card. A yellow card is a warning. Behavior like fouls, arguing, wasting time, and reckless tackles can get a player a yellow card. Getting two yellow cards in the same match automatically gives you a red card.")
-                            }
-                        }
-                    
-                    Button("Close") {
-                        showYellow = false
-                    }
-                    .padding(.top, 5)
-                }
-                .frame(width: 300)
-                .padding()
-                .background(Color.yellow.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
-            }
-            
-            if showRed
-            {
-                VStack(spacing:10)
-                {
-                    Text("A red card gets you sent off the field. The team can't replace you. You can get a red card by violence, serious foul play, offensive language, and recieving a 2nd yellow card in the same match.")
-                        .font(.headline)
-                        .foregroundColor(.black)
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                UIAccessibility.post(notification: .announcement, argument: "You clicked the red card. A red card gets you sent off the field. The team can't replace you. You can get a red card by violence, serious foul play, offensive language, and recieving a 2nd yellow card in the same match.")
-                            }
-                        }
-                    
-                    Button("Close") {
-                        showRed = false
-                    }
-                    .padding(.top, 5)
-                }
-                .frame(width: 300)
-                .padding()
-                .background(Color.red.opacity(0.4))
-                .cornerRadius(20)
-                .transition(.scale)
-            }
+            .animation(.easeInOut, value: showPopup)
+            .animation(.easeInOut, value: showClock)
+            .animation(.easeInOut, value: showFlag)
+            .animation(.easeInOut, value: showPlayer)
+            .animation(.easeInOut, value: showCards)
+            .animation(.easeInOut, value: showYellow)
+            .animation(.easeInOut, value: showRed)
             
         }
-        .animation(.easeInOut, value: showPopup)
-        .animation(.easeInOut, value: showClock)
-        .animation(.easeInOut, value: showFlag)
-        .animation(.easeInOut, value: showPlayer)
-        .animation(.easeInOut, value: showCards)
-        .animation(.easeInOut, value: showYellow)
-        .animation(.easeInOut, value: showRed)
-        
+    }
+}
+
+struct PenaltyRules: View {
+    @State private var currentIndex = 0
+    @State private var fade = true
+    
+    private let images = ["Penalty_wrong", "Penalty_right"]
+    private let descriptions = [
+        "Penalty Wrong",
+        "Penalty Right"
+    ]
+    
+    var body: some View {
+        VStack(spacing: 20) {
+            ZStack {
+                Image(images[currentIndex])
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+                    .opacity(fade ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.5), value: fade)
+            }
+            .onAppear {
+                fade = true
+            }
+            
+            Text(descriptions[currentIndex])
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(Color.yellow.opacity(0.2))
+                .cornerRadius(10)
+            
+            HStack(spacing: 20) {
+                if currentIndex == 0 {
+                    NavigationLink("Go Back") {
+                        SlideshowMenu()
+                    }
+                } else {
+                    Button("Previous") {
+                        withAnimation {
+                            fade = false
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            currentIndex -= 1
+                            fade = true
+                        }
+                    }
+                }
+                
+                if currentIndex < images.count - 1 {
+                    Button("Next") {
+                        withAnimation {
+                            fade = false
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            currentIndex += 1
+                            fade = true
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                } else {
+                    NavigationLink("Finish") {
+                        SlideshowMenu()
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+        }
+        .padding()
+        .navigationTitle("Penalty Rules")
+        .navigationBarBackButtonHidden(true)
+    }
+}
+
+
+struct OffsideRules: View {
+    @State private var currentIndex = 0
+    @State private var fade = true
+    
+    private let images = ["Offside_wrong", "Offside_wrong1", "Offside_right", "Offside_right1"] 
+    private let descriptions = ["An offside ocurrs when a player is behind the last defender", "The moment when the passing player touches the ball if the atacker is behing that last defender an offise is called", "In this case the player is in front of the last defender", "This will not result in an offside since the pass was made when the player was in front of the defender"]
+    var body: some View {
+        VStack(spacing: 20) {
+            ZStack {
+                Image(images[currentIndex])
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 300)
+                    .opacity(fade ? 1 : 0)
+                    .animation(.easeInOut(duration: 0.5), value: fade)
+            }
+            .onAppear {
+                fade = true
+            }
+            
+            Text(descriptions[currentIndex])
+                .font(.body)
+                .multilineTextAlignment(.center)
+                .padding()
+                .background(Color.yellow.opacity(0.2))
+                .cornerRadius(10)
+
+            
+            HStack(spacing: 20) {
+                if (currentIndex == 0){
+                    NavigationLink("Go Back") {
+                        SlideshowMenu() 
+                    }
+                }else{
+                    Button("Previous") {
+                        withAnimation{
+                            fade = false
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            currentIndex -= 1
+                            fade = true
+                        }
+                    }
+                }
+                
+                if currentIndex < images.count - 1 {
+                    Button("Next") {
+                        withAnimation {
+                            fade = false
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                            currentIndex += 1
+                            fade = true
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                } else {
+                    NavigationLink("Finish") {
+                        SlideshowMenu() 
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
+        }
+        .padding()
+        .navigationTitle("Slideshow")
+        .navigationBarBackButtonHidden(true)
+    }
+}
+
+struct SlideshowMenu: View {
+    @State private var goToContentView = false
+    
+    var body: some View {
+        NavigationStack {
+            VStack(spacing: 20) {
+                HStack {
+                    Image("Offside_right1")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 200)
+                    Image("Penalty_right")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 200)
+                }
+                
+                HStack(spacing: 20) {
+                    NavigationLink("Offside Rules") {
+                        OffsideRules()
+                    }
+                    NavigationLink("Penalty Rules") {
+                        PenaltyRules()
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                
+                NavigationLink(destination: ContentView(), isActive: $goToContentView) {
+                    EmptyView()
+                }
+            }
+            .padding()
+            .navigationTitle("Slideshow Menu")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button {
+                        goToContentView = true
+                    } label: {
+                        Label("Inicio", systemImage: "chevron.left")
+                    }
+                }
+            }
+        }
     }
 }
 
