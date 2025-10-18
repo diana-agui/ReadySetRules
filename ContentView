@@ -85,19 +85,19 @@ struct ContentView: View {
                                 .clipShape(Circle())
                         }
                         .offset(x: -320, y: -110)
-
+                        
                         Button(action: {
-                        showQuiz = true
-                    }) {
-                        Image(systemName: "document")
-                            .font(.system(size: 30))
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(Color.purple)
-                            .clipShape(Circle())
-                    }
-                    .offset(x: -125, y: -370)
-
+                            showQuiz = true
+                        }) {
+                            Image(systemName: "document")
+                                .font(.system(size: 30))
+                                .foregroundColor(.white)
+                                .padding()
+                                .background(Color.purple)
+                                .clipShape(Circle())
+                        }
+                        .offset(x: -125, y: -370)
+                        
                     }
                     .padding(.bottom, 30)
                 }
@@ -328,10 +328,18 @@ struct ContentView: View {
                     .cornerRadius(20)
                     .transition(.scale)
                 }
-
-                if showQuiz{
-                QuizView(showQuiz: $showQuiz)
-            }
+                
+                if showQuiz {
+                    // Fondo oscuro semitransparente
+                    Color.black.opacity(0.6)
+                        .edgesIgnoringSafeArea(.all)
+                        .transition(.opacity)
+                    
+                    // Vista del quiz
+                    QuizView(showQuiz: $showQuiz)
+                        .transition(.scale)
+                        .zIndex(1)
+                }
                 
             }
             .animation(.easeInOut, value: showPopup)
@@ -446,7 +454,7 @@ struct OffsideRules: View {
                 .padding()
                 .background(Color.yellow.opacity(0.2))
                 .cornerRadius(10)
-
+            
             
             HStack(spacing: 20) {
                 if (currentIndex == 0){
@@ -582,12 +590,12 @@ struct QuizView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text("Trivia")
-                .foregroundColor(.red)
+                .foregroundColor(.orange)
                 .font(.largeTitle)
                 .bold()
             
             Text(quizQuestions[currentQuestion].question)
-                .foregroundColor(.red)
+                .foregroundColor(.white)
                 .font(.system(size: 10))
             
             ForEach(0..<quizQuestions[currentQuestion].options.count, id: \.self) { index in
@@ -603,6 +611,7 @@ struct QuizView: View {
                         .frame(width: 200)
                         .background(Color.orange)
                         .cornerRadius(10)
+                        .foregroundColor(.white)
                 }
             }
             
@@ -620,9 +629,10 @@ struct QuizView: View {
                     }else {
                         isQuizComplete = true
                     }
-                
+                    
                 }
                 .padding()
+                .foregroundColor(.orange)
             }
             
             if isQuizComplete {
@@ -647,7 +657,7 @@ struct QuizView: View {
                 }
                 .padding()
             }
-
+            
             
             Text("Score: \(score)")
                 .font(.subheadline)
@@ -662,8 +672,7 @@ struct QuizView: View {
         .background(Color.gray)
         .foregroundColor(.white)
         .cornerRadius(10)
-        .position(x: 670, y: 700)
+        .position(x: 800, y: 200)
     }
-        
+    
 }
-
